@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: #aaa0a0;
+
+    }
+     a{
+            text-decoration-line: none;
+            color:black;
+            cursor: pointer;
+        }
+        .drop {
+            position: relative;
+            display: inline-block;
+        }
+        .drop-content {
+            display: none;
+            position: absolute;
+            background-color: #C4DFDF;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+        }
+        .drop:hover .drop-content {
+            display: block;
+        }
+        .drop-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-radius: 10px;
+        }
+        .drop-content a:hover {
+            background-color: #E3F4F4;
+        }
+       
+    
+</style>
+<body>
+    
+    
+       <div id="notcenter" style=" padding: 270px;  background-color: rgb(34, 36, 34); height: 140px;"><center><p style="color: blue;">Welcome to this website</p> 
+        <a onclick='next()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a></center> </div>
+    
+        
+       <div id="notcenter2" style=" padding: 270px;  background-color: rgb(34, 36, 34); height: 140px;"><center><p style="color: blue;"> for the first time </p> 
+        <a onclick='next2()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a>
+    <p style="color: blue;"> already got usrd to our product  </p> 
+        <a onclick='next2()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a></center> </div>
+
+    </div>
+    <div id="centerr">
+        <header id="top" style="background-color: #855757; height: 50px; display: grid;  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; border-radius: 10px;">
+            <div></div>
+            <div class="drop" style="margin-top: 15px; ">
+                <a href="#" class="dropbtn,list" style="font-size: x-large; color:  blue;">option1</a>
+                <div class="drop-content">
+                    <a  class="list" onclick="openA()" >A</a>
+                    <a  class="list" onclick="openB()">B</a>
+                </div>
+            </div>
+            <div><h2 style="color:  blue;">SAT</h2></div>
+            <div class="drop" style="margin-top: 15px;">
+                <a href="#" class="dropbtn,list" style="font-size: x-large; color:  blue;">option2</a>
+                <div class="drop-content">
+                    <a  class="list" onclick="openD()">D</a>    
+                    <a  class="list" onclick="openE()">E</a>
+                </div>
+            </div>
+        </header>
+        <div style="display: grid; grid-template-columns:100px 1fr 150px ; grid-template-rows: 600px ; margin-top: 10px;">
+            <div id="left" style="background-color: rgb(34, 36, 34); border-radius: 30px;"></div>
+            <div id="center" style="background-color: rgb(34, 36, 34); border-radius: 20px;">
+                <div id="a" style="margin: 60px; ">A</div>
+                <div id="b" style="margin: 60px; ">B</div>
+                <div id="d" style="margin: 60px; ">D</div>
+                <div id="e" style="margin: 60px; ">E</div>
+            </div>
+            <img src="Welcome Scan.jpg" style="border-radius: 30px; width: 150px;height: 600px;  ">
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById("centerr").style.display= 'none';
+    document.getElementById("notcenter2").style.display= 'none';
+    document.getElementById("a").style.display='none';
+    document.getElementById("b").style.display='none';
+    document.getElementById("d").style.display='none';
+    document.getElementById("e").style.display='none';
+    function next(){
+        document.getElementById("notcenter").style.display='none';
+        document.getElementById("notcenter2").style.display= 'block';
+        document.getElementById("centerr").style.display='none'
+    }
+   function next2(){
+        document.getElementById("notcenter").style.display='none';
+        document.getElementById("notcenter2").style.display= 'none';
+        document.getElementById("centerr").style.display='block'
+    }
+
+
+function openA(){
+
+        document.getElementById("a").style.display='block';
+    document.getElementById("b").style.display='none';
+    document.getElementById("d").style.display='none';
+    document.getElementById("e").style.display='none';
+}
+function openB(){
+
+        document.getElementById("b").style.display='block';
+         document.getElementById("a").style.display='none';
+    document.getElementById("d").style.display='none';
+    document.getElementById("e").style.display='none';
+}
+function openD(){
+
+        document.getElementById("d").style.display='block';
+         document.getElementById("a").style.display='none';
+    document.getElementById("b").style.display='none';
+    document.getElementById("e").style.display='none';
+}
+function openE(){
+
+        document.getElementById("e").style.display='block';
+         document.getElementById("a").style.display='none';
+    document.getElementById("b").style.display='none';
+    document.getElementById("d").style.display='none';
+    
+}
+</script>
+</html>
