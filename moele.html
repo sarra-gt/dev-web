@@ -1,153 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     body {
-        background-color: #aaa0a0;
-
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(34,36,34);
+        color: #333;
     }
-     a{
-            text-decoration-line: none;
-            color:black;
-            cursor: pointer;
+    a {
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+    }
+    button {
+        cursor: pointer;
+        border: none;
+        background-color: #4a90e2;
+        color: #fff;
+        border-radius: 12px;
+        padding: 10px 20px;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #2563eb;
+    }
+    #notcenter, #notcenter2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        background-color: rgb(34,36,34);
+        color: #00f;
+        text-align: center;
+        padding: 40px 20px;
+    }
+    #top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #92c7f3;
+        padding: 10px 0;
+        border-radius: 10px;
+    }
+    #top h2 {
+        color: #00f;
+        margin: 0;
+    }
+    .drop {
+        position: relative;
+        display: inline-block;
+    }
+    .drop-content {
+        display: none;
+        position: absolute;
+        background-color: #C4DFDF;
+        min-width: 120px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        z-index: 1;
+    }
+    .drop:hover .drop-content {
+        display: block;
+    }
+    .drop-content a {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: black;
+    }
+    .drop-content a:hover {
+        background-color: #E3F4F4;
+    }
+    #centerr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px auto;
+        width: 95%;
+        max-width: 1200px;
+    }
+    #center {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    #a, #b, #d, #e {
+        background-color: azure;
+        border-radius: 20px;
+        padding: 20px;
+        min-width: 280px;
+        flex: 1 1 300px;
+    }
+    select, input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid  #4a90e2;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+    }
+    .graph-container {
+        width: 100%;
+        max-width: 700px;
+        margin: 20px auto;
+        padding: 10px;
+    }
+    .graph {
+        display: flex;
+        align-items: flex-end;
+        height: 200px;
+        gap: 4px;
+        border-left: 2px solid #333;
+        border-bottom: 2px solid #333;
+        padding: 10px;
+        overflow-x: auto;
+    }
+    .bar {
+        width: 6%;
+        min-width: 20px;
+        background: #4fa3ff;
+        border-radius: 5px 5px 0 0;
+        text-align: center;
+        color: #222;
+        font-size: 12px;
+    }
+    .graph-title {
+        text-align: center;
+        color: #fafafa;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    #centerr2 {
+        width: 95%;
+        max-width: 600px;
+        margin: 20px auto;
+    }
+    #centerr2 table {
+        width: 100%;
+        border: 1px dashed #444;
+        border-radius: 10px;
+        padding: 10px;
+        background: #fafafa;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        border-collapse: collapse;
+    }
+    #centerr2 th {
+        background: #4a90e2;
+        color: white;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+    }
+    #centerr2 td {
+        padding: 10px;
+    }
+    @media (max-width: 768px) {
+        #center {
+            flex-direction: column;
+            align-items: center;
         }
-        .drop {
-            position: relative;
-            display: inline-block;
+        #top {
+            flex-direction: column;
+            gap: 10px;
         }
-        .drop-content {
-            display: none;
-            position: absolute;
-            background-color: #C4DFDF;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 10px;
-        }
-        .drop:hover .drop-content {
-            display: block;
-        }
-        .drop-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-radius: 10px;
-        }
-        .drop-content a:hover {
-            background-color: #E3F4F4;
-        }
-       
-    
+    }
+    canvas {
+    width: 100% !important;
+    height: 70% !important;
+}
 </style>
+</head>
 <body>
-    
-    
-       <div id="notcenter" style=" padding: 270px;  background-color: rgb(34, 36, 34); height: 140px;"><center><p style="color: blue;">Welcome to this website</p> 
-        <a onclick='next()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a></center> </div>
-    
-        
-       <div id="notcenter2" style=" padding: 270px;  background-color: rgb(34, 36, 34); height: 140px;"><center><p style="color: blue;"> learn about our product  </p> 
-        <a onclick='next3()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a>
-    <p style="color: blue;"> already got used to our product  </p> 
-        <a onclick='next2()'><button id="open" style="padding: 15px; border-radius: 20px; " >--></button> </a></center> </div>
 
-    </div>
-    <div id="centerr">
-        <header id="top" style="background-color: #855757; height: 50px; display: grid;  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; border-radius: 10px;">
-            <div></div>
-            <div class="drop" style="margin-top: 15px; ">
-                <a href="#" class="dropbtn,list" style="font-size: x-large; color:  blue;">option1</a>
-                <div class="drop-content">
-                    <a  class="list" onclick="openA()" >A</a>
-                    <a  class="list" onclick="openB()">B</a>
-                </div>
+<div id="notcenter">
+    <p>Welcome to this website</p> 
+    <button onclick="next()">Start</button>
+</div>
+
+<div id="notcenter2">
+    <p>Help us to get better</p> 
+    <button onclick="next3()">--></button>
+    <p>Get to the website</p> 
+    <button onclick="next2()">--></button>
+</div>
+
+<div id="centerr">
+    <header id="top">
+        <div class="drop">
+            <a href="#">Temperature</a>
+            <div class="drop-content">
+                <a onclick="openA()">days</a>
+                <a onclick="openB()">hist</a>
             </div>
-            <div><h2 style="color:  blue;">SAT</h2></div>
-            <div class="drop" style="margin-top: 15px;">
-                <a href="#" class="dropbtn,list" style="font-size: x-large; color:  blue;">option2</a>
-                <div class="drop-content">
-                    <a  class="list" onclick="openD()">D</a>    
-                    <a  class="list" onclick="openE()">E</a>
-                </div>
-            </div>
-        </header>
-        <div style="display: grid; grid-template-columns:100px 1fr 150px ; grid-template-rows: 600px ; margin-top: 10px;">
-            <div id="left" style="background-color: rgb(34, 36, 34); border-radius: 30px;"></div>
-            <div id="center" style="background-color: rgb(34, 36, 34); border-radius: 20px;">
-                <div id="a" style="margin: 60px; background-color: azure; width: 200px; height: 200px; margin-top: 100px; border-radius: 20%; "><center>A</center></div>
-                <div id="b" style="margin: 60px; background-color: azure; width: 200px; height: 200px; margin-top: 300px; border-radius: 20%; "><center>B</center></div>
-                <div id="d" style="margin: 60px; background-color: azure; width: 200px; height: 200px;margin-left: 600px; margin-top: 100px; border-radius: 20%; "><center>D</center></div>
-                <div id="e" style="margin: 60px; background-color: azure; width: 200px; height: 200px;margin-left: 600px; margin-top: 300px; border-radius: 20%; "><center>E</center></div>
-            </div>
-            <img src="Welcome Scan.jpg" style="border-radius: 30px; width: 150px;height: 600px;  ">
         </div>
-    </div>
+        <h2>SAT</h2>
+        <div class="drop">
+            <a href="#">rainfall</a>
+            <div class="drop-content">
+                <a onclick="openD()">chart</a>
+                <a onclick="openE()">days</a>
+            </div>
+        </div>
+    </header>
 
- <div id="centerr2">
-        trying something 
-            
-    </div>
+    <div id="center">
+        <div id="a">
+            <label for="daySelector">Select a day:</label>
+            <select id="daySelector" onchange="showTemperature()">
+                <option value="">-- Choose a day --</option>
+                <option value="2025-01-01">2025-01-01</option>
+                <option value="2025-01-02">2025-01-02</option>
+                <option value="2025-01-03">2025-01-03</option>
+                <option value="2025-01-04">2025-01-04</option>
+                <option value="2025-01-05">2025-01-05</option>
+                <option value="2025-01-06">2025-01-06</option>
+                <option value="2025-01-07">2025-01-07</option>
+                <option value="2025-01-08">2025-01-08</option>
+                <option value="2025-01-09">2025-01-09</option>
+                <option value="2025-01-10">2025-01-10</option>
+                <option value="2025-01-11">2025-01-11</option>
+                <option value="2025-01-12">2025-01-12</option>
+                <option value="2025-01-13">2025-01-13</option>
+                <option value="2025-01-14">2025-01-14</option>
+            </select>
+            <div id="result" style="font-weight:bold; margin-top:10px;"></div>
+        </div>
 
-</body>
+        <div id="b" class="graph-container">
+            <div class="graph-title">Daily Temperatures Over 14 Days</div>
+            <div class="graph">
+                <div class="bar" style="height:150px;">15°C</div>
+                <div class="bar" style="height:170px;">17°C</div>
+                <div class="bar" style="height:140px;">14°C</div>
+                <div class="bar" style="height:180px;">18°C</div>
+                <div class="bar" style="height:200px;">20°C</div>
+                <div class="bar" style="height:190px;">19°C</div>
+                <div class="bar" style="height:160px;">16°C</div>
+                <div class="bar" style="height:170px;">17°C</div>
+                <div class="bar" style="height:210px;">21°C</div>
+                <div class="bar" style="height:220px;">19°C</div>
+                <div class="bar" style="height:190px;">19°C</div>
+                <div class="bar" style="height:180px;">18°C</div>
+                <div class="bar" style="height:160px;">16°C</div>
+                <div class="bar" style="height:150px;">15°C</div>
+            </div>
+        </div>
+
+        <div id="d"><center><canvas id="tempChart"></canvas></center></div>
+        <div id="e"><center><label for="rainDaySelector">Select a day:</label>
+<select id="rainDaySelector" onchange="showRainfall()">
+    <option value="">-- Choose a day --</option>
+    <option value="2025-01-01">2025-01-01</option>
+    <option value="2025-01-02">2025-01-02</option>
+    <option value="2025-01-03">2025-01-03</option>
+    <option value="2025-01-04">2025-01-04</option>
+    <option value="2025-01-05">2025-01-05</option>
+    <option value="2025-01-06">2025-01-06</option>
+    <option value="2025-01-07">2025-01-07</option>
+    <option value="2025-01-08">2025-01-08</option>
+    <option value="2025-01-09">2025-01-09</option>
+    <option value="2025-01-10">2025-01-10</option>
+    <option value="2025-01-11">2025-01-11</option>
+    <option value="2025-01-12">2025-01-12</option>
+    <option value="2025-01-13">2025-01-13</option>
+    <option value="2025-01-14">2025-01-14</option>
+</select>
+
+<div id="rainResult" style="font-weight:bold; margin-top:10px;"></div></center></div>
+    </div>
+</div>
+
+<div id="centerr2">
+    <table>
+        <thead>
+            <tr><th colspan="2">Form</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>First name</td><td><input type="text" name="firstname" placeholder="Firstname" required></td></tr>
+            <tr><td>Family name</td><td><input type="text" name="lastname" placeholder="Lastname"></td></tr>
+            <tr><td>E-mail</td><td><input type="email" name="email" placeholder="E-mail" required></td></tr>
+            <tr><td>Date of birth</td><td><input type="date" required></td></tr>
+            <tr><td>Place of birth</td><td><input type="text" required></td></tr>
+            <tr>
+                <td>Role</td>
+                
+                <td>
+                    <label><input type="radio" name="role" value="professor" onclick="toggleLevels('professor')"> Professor</label>
+                    <label><input type="radio" name="role" value="student" onclick="toggleLevels('student')"> Student</label>
+                </td>
+
+            </tr>    
+            <tr> <td></td>
+                <td>
+                    <div id="student-level" style="display:none;">
+                        <label for="student-select">Choose Level:</label>
+                        <select name="student_level" id="student-select">
+                            <option value="">-- Select Level --</option>
+                            <option value="licence1">Licence 1</option>
+                            <option value="licence2">Licence 2</option>
+                            <option value="licence3">Licence 3</option>
+                            <option value="master1">Master 1</option>
+                            <option value="master2">Master 2</option>
+                        </select>
+                    </div>
+                    
+                    
+                    
+                    <div id="professor-level" style="display:none;">
+                        <label for="professor-select">Choose Category:</label>
+                        <select name="professor_level" id="professor-select">
+                            <option value="">-- Select Category --</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr><td>University</td><td>
+                <select name="university" required>
+                    <option value="">-- Select University --</option>
+                    <option value="usthb">USTHB – Houari Boumediene University of Science and Technology</option>
+                    <option value="algiers1">University of Algiers 1 – Benyoucef Benkhedda</option>
+                    <option value="blida1">Saad Dahlab University of Blida 1</option>
+                    <option value="boumerdes">M'Hamed Bougara University of Boumerdes</option>
+                    <option value="bejaia">University of Bejaia – Abderrahmane Mira</option>
+                    <option value="tiziouzou">University of Tizi-Ouzou – Mouloud Mammeri</option>
+                    <option value="bouira">University of Bouira – Akli Mohand Oulhadj</option>
+                    <option value="tipaza">University of Tipaza</option>
+                </select>
+            </td></tr>
+            <tr><td>Propose improvement</td><td><textarea name="improvement" placeholder="Write your improvement here..." rows="4"></textarea></td></tr>
+            <tr><td></td><td><button onclick="getback()">Get to the website</button></td></tr>
+        </tbody>
+    </table>
+</div>
+
 <script>
     document.getElementById("centerr").style.display= 'none';
     document.getElementById("notcenter2").style.display= 'none';
+    document.getElementById("centerr2").style.display='none';
     document.getElementById("a").style.display='none';
     document.getElementById("b").style.display='none';
     document.getElementById("d").style.display='none';
     document.getElementById("e").style.display='none';
-    function next(){
-        document.getElementById("notcenter").style.display='none';
-        document.getElementById("notcenter2").style.display= 'block';
-        document.getElementById("centerr").style.display='none'
+
+    function next(){document.getElementById("notcenter").style.display='none';document.getElementById("notcenter2").style.display= 'block';}
+    function next2(){document.getElementById("notcenter").style.display='none';document.getElementById("notcenter2").style.display= 'none';document.getElementById("centerr").style.display='block';}
+    function next3(){document.getElementById("notcenter").style.display='none';document.getElementById("notcenter2").style.display= 'none';document.getElementById("centerr2").style.display='block';}
+    function openA(){showBlock('a');}
+    function openB(){showBlock('b');}
+    function openD(){showBlock('d');}
+    function openE(){showBlock('e');}
+    function showBlock(id){['a','b','d','e'].forEach(el=>document.getElementById(el).style.display='none');document.getElementById(id).style.display='block';}
+    function toggleLevels(role){document.getElementById("student-level").style.display=role==="student"?"block":"none";document.getElementById("professor-level").style.display=role==="professor"?"block":"none";}
+    function getback(){document.getElementById("centerr").style.display='block';document.getElementById("centerr2").style.display='none';}
+    const temps={"2025-01-01":15,"2025-01-02":14,"2025-01-03":16,"2025-01-04":13,"2025-01-05":15,"2025-01-06":17,"2025-01-07":18,"2025-01-08":16,"2025-01-09":19,"2025-01-10":20,"2025-01-11":18,"2025-01-12":17,"2025-01-13":16,"2025-01-14":15};
+    function showTemperature(){const selectedDay=document.getElementById("daySelector").value;const resultDiv=document.getElementById("result");if(!selectedDay){resultDiv.innerHTML="";return;}const temp=temps[selectedDay];resultDiv.innerHTML="Temperature on "+selectedDay+" : <b>"+temp+"°C</b>";}
+    const ctx = document.getElementById('tempChart');
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7","Day 8","Day 9","Day 10","Day 11","Day 12","Day 13","Day 14","Day 15"],
+        datasets: [{
+            label: "Rainfull (mm)",
+            data: [12,5,0,7,9,10,7,5,11,5,10,12,0,0,8]
+        }]
+    },
+    options: {
+        responsive: true,  
+        maintainAspectRatio: false, 
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+const rainData = {
+    "2025-01-01": 5,
+    "2025-01-02": 12,
+    "2025-01-03": 0,
+    "2025-01-04": 8,
+    "2025-01-05": 3,
+    "2025-01-06": 15,
+    "2025-01-07": 7,
+    "2025-01-08": 0,
+    "2025-01-09": 20,
+    "2025-01-10": 10,
+    "2025-01-11": 6,
+    "2025-01-12": 9,
+    "2025-01-13": 4,
+    "2025-01-14": 11
+};
+
+function showRainfall() {
+    const selectedDay = document.getElementById("rainDaySelector").value;
+    const resultDiv = document.getElementById("rainResult");
+
+    if (!selectedDay) {
+        resultDiv.innerHTML = "";
+        return;
     }
 
-     function next2(){
-        document.getElementById("notcenter").style.display='none';
-        document.getElementById("notcenter2").style.display= 'none';
-        document.getElementById("centerr").style.display='block'}
-
-   function next3(){
-        document.getElementById("notcenter").style.display='none';
-        document.getElementById("notcenter2").style.display= 'none';
-        document.getElementById("centerr").style.display='none';
-        document.getElementById("centerr2").style.display='block'
-    }
-
-
-function openA(){
-
-        document.getElementById("a").style.display='block';
-    document.getElementById("b").style.display='none';
-    document.getElementById("d").style.display='none';
-    document.getElementById("e").style.display='none';
-}
-function openB(){
-
-        document.getElementById("b").style.display='block';
-         document.getElementById("a").style.display='none';
-    document.getElementById("d").style.display='none';
-    document.getElementById("e").style.display='none';
-}
-function openD(){
-
-        document.getElementById("d").style.display='block';
-         document.getElementById("a").style.display='none';
-    document.getElementById("b").style.display='none';
-    document.getElementById("e").style.display='none';
-}
-function openE(){
-
-        document.getElementById("e").style.display='block';
-         document.getElementById("a").style.display='none';
-    document.getElementById("b").style.display='none';
-    document.getElementById("d").style.display='none';
-    
+    const rain = rainData[selectedDay];
+    resultDiv.innerHTML = "Rainfall on " + selectedDay + " : <b>" + rain + " mm</b>";
 }
 </script>
+</body>
 </html>
